@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%= content_for?(:title) ? yield(:title) : "The Met Collection" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Browse the Metropolitan Museum of Art's open collection" %>">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="min-h-screen flex flex-col bg-white text-gray-900 antialiased">
+
+    <%= render "layouts/header" %>
+
+    <main class="flex-1" id="main-content">
+      <% if notice.present? %>
+        <div class="bg-green-50 border-b border-green-200 px-6 py-3 text-sm text-green-800">
+          <%= notice %>
+        </div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="bg-red-50 border-b border-red-200 px-6 py-3 text-sm text-red-800">
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </main>
+
+    <%= render "layouts/footer" %>
+
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<header class="border-b border-gray-200 bg-white sticky top-0 z-50" role="banner">
+
+  <%# Skip to content link - hidden until focused, critical for accessibility %>
+  <a href="#main-content"
+     class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-black text-white text-xs px-4 py-2 z-50 tracking-widest uppercase">
+    Skip to content
+  </a>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+
+      <%# Logo / Wordmark %>
+      <%= link_to root_path,
+          class: "flex items-center gap-3 group",
+          aria: { label: "The Met Collection — home" } do %>
+        <div class="w-8 h-8 bg-black flex items-center justify-center flex-shrink-0">
+          <span class="text-white text-xs font-bold tracking-widest">M</span>
+        </div>
+        <span class="text-sm font-medium tracking-widest uppercase hidden sm:block">
+          The Met Collection
+        </span>
+      <% end %>
+
+      <%# Nav %>
+      <nav role="navigation" aria-label="Main navigation">
+        <ul class="flex items-center gap-6 text-xs tracking-widest uppercase">
+          <li>
+            <%= link_to "Collection",
+                artworks_path,
+                class: "hover:text-gray-500 transition-colors #{current_page?(artworks_path) ? "border-b border-black pb-0.5" : ""}" %>
+          </li>
+          <li>
+            <a href="https://www.metmuseum.org"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="hover:text-gray-500 transition-colors">
+              Visit the Met ↗
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+</header>
