@@ -5,23 +5,22 @@ require "openssl"
 class MetApiService
   BASE_URL = "https://collectionapi.metmuseum.org/public/collection/v1"
 
-  def search(query: nil, department_id: nil)
+  def search(query: nil, department_id: nil, page: 1, per_page: 20)
     params = { hasImages: true }
     params[:q] = query.presence || "painting"
     params[:departmentId] = department_id if department_id.present?
-
-    response = get("#{BASE_URL}/search", params)
-
-    Rails.logger.debug "=== Met API search response: #{response&.slice("total", "objectIDs")&.inspect}"
-
-    return [] unless response && response["objectIDs"]
-    response["objectIDs"].first(6)
+    Rails.cache.fetch("met-api/search/#{params[:q]}/#{params[:departmentId]}/#{page}", expires_in: 24.hours) do
+      response = get("#{BASE_URL}/search", params)
+      offset = (page - 1) * per_page
+      response&.dig("objectIDs")&.drop(offset)&.first(per_page) || []
+    end
   end
 
   def find(id)
-    data = get("#{BASE_URL}/objects/#{id}")
-    return nil unless data
-    Artwork.new(data)
+    Rails.cache.fetch("met-api/objects/#{id}", expires_in: 24.hours) do
+      data = get("#{BASE_URL}/objects/#{id}")
+      Artwork.new(data) if data
+    end
   end
 
   private

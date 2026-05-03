@@ -1,5 +1,5 @@
 <div class="max-w-7xl mx-auto px-4 py-8">
-  <h1 class="text-3xl font-light tracking-wide mb-8">The Met Collection</h1>
+  <h1 class="text-3xl font-light tracking-wide mb-8 font-heading">The Met Collection</h1>
 
   <%# Search form %>
   <form action="<%= artworks_path %>" method="get" class="mb-8 flex gap-3">
@@ -8,10 +8,10 @@
       name="q"
       value="<%= @query %>"
       placeholder="Search artworks..."
-      class="flex-1 border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:border-gray-600"
+      class="flex-1 border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:border-gray-600 font-body"
     />
     <button type="submit"
-      class="bg-black text-white px-6 py-2 text-sm tracking-widest uppercase hover:bg-gray-800 transition">
+      class="bg-black text-white px-6 py-2 text-sm tracking-widest uppercase hover:bg-gray-800 transition font-body">
       Search
     </button>
   </form>
@@ -19,20 +19,28 @@
   <%# Results grid %>
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     <% @artworks.each do |artwork| %>
-      <% if artwork.has_image? %>
         <%= link_to artwork_path(artwork.id), class: "group block" do %>
           <div class="aspect-square bg-gray-100 overflow-hidden mb-3">
+          <% if artwork.has_image? %>
             <img
               src="<%= artwork.thumbnail_url %>"
               alt="<%= artwork.title %>"
               loading="lazy"
               class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
             />
+          <% else %>
+          <img
+              src="https://placehold.co/600x400"
+              alt="<%= artwork.title %>"
+              loading="lazy"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+            />
+          
+          <% end %>
           </div>
-          <p class="text-sm font-medium truncate"><%= artwork.title %></p>
-          <p class="text-xs text-gray-500 truncate"><%= artwork.artist %></p>
+          <p class="text-sm font-medium truncate font-body"><%= artwork.title %></p>
+          <p class="text-xs text-gray-500 truncate font-body"><%= artwork.artist %></p>
         <% end %>
-      <% end %>
     <% end %>
   </div>
 </div>
