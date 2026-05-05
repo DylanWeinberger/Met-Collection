@@ -17,30 +17,12 @@
   </form>
 
   <%# Results grid %>
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <% @artworks.each do |artwork| %>
-        <%= link_to artwork_path(artwork.id), class: "group block" do %>
-          <div class="aspect-square bg-gray-100 overflow-hidden mb-3">
-          <% if artwork.has_image? %>
-            <img
-              src="<%= artwork.thumbnail_url %>"
-              alt="<%= artwork.title %>"
-              loading="lazy"
-              class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-            />
-          <% else %>
-          <img
-              src="https://placehold.co/600x400"
-              alt="<%= artwork.title %>"
-              loading="lazy"
-              class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-            />
-          
-          <% end %>
-          </div>
-          <p class="text-sm font-medium truncate font-body"><%= artwork.title %></p>
-          <p class="text-xs text-gray-500 truncate font-body"><%= artwork.artist %></p>
-        <% end %>
-    <% end %>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" data-controller="load-more" data-load-more-target="grid" data-load-more-page-value="2" data-load-more-query-value="<%= @query %>" data-load-more-department-id="<%= @department_id %>">
+      <% @artworks.each do |artwork| %>
+        <%= render "artworks/artwork_card", artwork: artwork %>
+      <% end %>
+      <button data-action="click->load-more#loadMore"  class="col-span-full bg-gray-200 text-gray-700 px-4 py-2 text-sm hover:bg-gray-300 transition font-body">
+        Load More
+      </button>
   </div>
 </div>

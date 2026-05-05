@@ -1,0 +1,21 @@
+<%= link_to artwork_path(artwork.id), class: "group block" do %>
+    <div class="aspect-square bg-gray-100 overflow-hidden mb-3">
+    <% if artwork.has_image? %>
+    <img
+        src="<%= artwork.thumbnail_url %>"
+        alt="<%= artwork.title %>"
+        loading="lazy"
+        class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+    />
+    <% else %>
+    <img
+        src="https://placehold.co/600x400"
+        alt="<%= artwork.title %>"
+        loading="lazy"
+        class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+    />
+    <% end %>
+    </div>
+    <p class="text-sm font-medium truncate font-body"><%= artwork.title %></p>
+    <p class="text-xs text-gray-500 truncate font-body"><%= artwork.artist %></p>
+<% end %>
