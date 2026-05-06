@@ -10,7 +10,7 @@
       placeholder="Search artworks..."
       class="flex-1 border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:border-gray-600 font-body"
     />
-    <select name="department_id" class="border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:border-gray-600 font-body">
+    <select name="department_id" class="border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:border-gray-600 font-body" aria-label="Select a department">
       <option selected value="">All Departments</option>
       <% MetDepartment::ALL.each do |name, id| %>
         <option value="<%= id %>" <%= "selected" if @department_id.to_s == id.to_s %>><%= name %></option>
@@ -32,7 +32,7 @@
     <% if @artworks.empty? && (@query.present? || @department_id.present?) %>
       <p class="text-center text-gray-500 mt-12 font-body">No artworks found for "<%= @query %>" in the selected department.</p>
     <% end %>
-    <% if @artworks.size > 20 %>
+    <% if @artworks.size >= 20 %>
     <button data-action="click->load-more#loadMore" data-load-more-target="button"  class="col-span-full bg-gray-200 text-gray-700 px-4 py-2 text-sm hover:bg-gray-300 transition font-body mt-6 cursor-pointer">
       Load More
     </button>
