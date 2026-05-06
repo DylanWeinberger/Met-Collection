@@ -17,12 +17,14 @@
   </form>
 
   <%# Results grid %>
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" data-controller="load-more" data-load-more-target="grid" data-load-more-page-value="2" data-load-more-query-value="<%= @query %>" data-load-more-department-id="<%= @department_id %>">
+  <div  data-controller="load-more"  data-load-more-page-value="2" data-load-more-query-value="<%= @query %>" data-load-more-department-id="<%= @department_id %>">
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"  data-load-more-target="grid">
       <% @artworks.each do |artwork| %>
         <%= render "artworks/artwork_card", artwork: artwork %>
       <% end %>
-      <button data-action="click->load-more#loadMore"  class="col-span-full bg-gray-200 text-gray-700 px-4 py-2 text-sm hover:bg-gray-300 transition font-body">
-        Load More
-      </button>
+    </div>
+    <button data-action="click->load-more#loadMore" data-load-more-target="button"  class="col-span-full bg-gray-200 text-gray-700 px-4 py-2 text-sm hover:bg-gray-300 transition font-body mt-6 cursor-pointer">
+      Load More
+    </button>
   </div>
 </div>
