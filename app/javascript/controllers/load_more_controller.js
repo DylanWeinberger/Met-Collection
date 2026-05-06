@@ -5,7 +5,9 @@ export default class extends Controller {
   static values = { page: Number, query: String, departmentId: String }
   
   async loadMore() {
-    const url = `/artworks/more?q=${this.queryValue}&page=${this.pageValue}`
+    const url = `/artworks/more?q=${this.queryValue}&page=${this.pageValue}&department_id=${this.departmentIdValue}`
+      console.log("Load more URL:", url)
+
     let html = null
     try {
         this.buttonTarget.disabled = true

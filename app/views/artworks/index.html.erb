@@ -10,6 +10,12 @@
       placeholder="Search artworks..."
       class="flex-1 border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:border-gray-600 font-body"
     />
+    <select name="department_id" class="border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:border-gray-600 font-body">
+      <option selected value="">All Departments</option>
+      <% MetDepartment::ALL.each do |name, id| %>
+        <option value="<%= id %>" <%= "selected" if @department_id.to_s == id.to_s %>><%= name %></option>
+      <% end %>
+    </select>
     <button type="submit"
       class="bg-black text-white px-6 py-2 text-sm tracking-widest uppercase hover:bg-gray-800 transition font-body">
       Search
@@ -17,14 +23,19 @@
   </form>
 
   <%# Results grid %>
-  <div  data-controller="load-more"  data-load-more-page-value="2" data-load-more-query-value="<%= @query %>" data-load-more-department-id="<%= @department_id %>">
+  <div  data-controller="load-more"  data-load-more-page-value="2" data-load-more-query-value="<%= @query %>" data-load-more-department-id-value="<%= @department_id %>">
   <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"  data-load-more-target="grid">
       <% @artworks.each do |artwork| %>
         <%= render "artworks/artwork_card", artwork: artwork %>
       <% end %>
     </div>
+    <% if @artworks.empty? && (@query.present? || @department_id.present?) %>
+      <p class="text-center text-gray-500 mt-12 font-body">No artworks found for "<%= @query %>" in the selected department.</p>
+    <% end %>
+    <% if @artworks.size > 20 %>
     <button data-action="click->load-more#loadMore" data-load-more-target="button"  class="col-span-full bg-gray-200 text-gray-700 px-4 py-2 text-sm hover:bg-gray-300 transition font-body mt-6 cursor-pointer">
       Load More
     </button>
+    <% end %>
   </div>
 </div>
