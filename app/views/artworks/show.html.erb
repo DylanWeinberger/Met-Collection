@@ -6,9 +6,18 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-6">
     <div class="bg-gray-50 flex items-center justify-center p-4">
-      <img src="<%= @artwork.image_url %>"
-           alt="<%= @artwork.title %>"
-           class="max-h-[600px] object-contain" />
+      <a href="<%= @artwork.image_url %>"
+      data-controller="lightbox"
+      data-lightbox-target="trigger"
+      data-pswp-src="<%= @artwork.image_url %>"
+      data-pswp-width="2500"
+      data-pswp-height="1667"
+      data-pswp-caption="Mountain view with a man looking into the distance"
+      class="lightbox-trigger block w-full h-full">
+        <img src="<%= @artwork.image_url %>"
+            alt="<%= @artwork.title %>"
+            class="max-h-[600px] object-contain" />
+      </a>
     </div>
 
     <div>

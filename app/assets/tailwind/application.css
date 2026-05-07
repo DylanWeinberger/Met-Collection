@@ -5,3 +5,9 @@
     --font-body: "Inter", "sans-serif";
     --font-heading: "Cormorant Garamond", "serif";
 }
+
+#page-loader.hide {
+
+  opacity: 0;
+  pointer-events: none;
+}

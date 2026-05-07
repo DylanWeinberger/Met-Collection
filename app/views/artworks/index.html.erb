@@ -2,7 +2,7 @@
   <h1 class="text-3xl font-light tracking-wide mb-8 font-heading">The Met Collection</h1>
 
   <%# Search form %>
-  <form action="<%= artworks_path %>" method="get" class="mb-8 flex gap-3">
+  <form action="<%= artworks_path %>" method="get" class="mb-8 flex gap-3" data-controller="search" data-action="submit->search#showLoader">
     <input
       type="text"
       name="q"
