@@ -71,36 +71,18 @@ export default class extends Controller {
       item.caption = caption;
     }
 
-    // If dimensions not provided, we'll need to load them
+    // If dimensions not provided, read them from the already-loaded thumbnail
     if (!item.width || !item.height) {
-      // Try to get dimensions from the thumbnail if it's already loaded
       const thumbnail = element.querySelector("img");
       if (thumbnail && thumbnail.complete && thumbnail.naturalWidth) {
-        // Calculate aspect ratio from thumbnail
-        const aspectRatio = thumbnail.naturalWidth / thumbnail.naturalHeight;
-
-        // Determine a reasonable full-size dimension based on aspect ratio
-        // This provides better defaults for different image types
-        if (aspectRatio > 1.2) {
-          // Landscape image
-          item.width = 2400;
-          item.height = Math.round(2400 / aspectRatio);
-        } else if (aspectRatio < 0.8) {
-          // Portrait image
-          item.height = 2400;
-          item.width = Math.round(2400 * aspectRatio);
-        } else {
-          // Square or nearly square
-          item.width = 2000;
-          item.height = 2000;
-        }
+        item.width = thumbnail.naturalWidth;
+        item.height = thumbnail.naturalHeight;
       } else {
-        // Conservative fallback when we have no information
-        // Use a moderate size that works for most cases
-        item.width = 1920;
-        item.height = 1080; // 16:9 as a safe default
+        // Thumbnail not yet loaded — flag for update once the full image loads
+        item.width = 1;
+        item.height = 1;
+        item.needsUpdate = true;
       }
-      item.needsUpdate = true;
     }
 
     return item;
