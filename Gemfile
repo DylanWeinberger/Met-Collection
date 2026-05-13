@@ -27,6 +27,8 @@ gem "stimulus-rails"
 
 gem 'redis', '~> 5.4', '>= 5.4.1'
 
+gem "connection_pool", "~> 2.4"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
