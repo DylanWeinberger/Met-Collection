@@ -12,7 +12,7 @@ class MetApiService
     Rails.cache.fetch("met-api/search/#{params[:q]}/#{params[:departmentId]}/#{page}", expires_in: 24.hours) do
       response = get("#{BASE_URL}/search", params)
       offset = (page - 1) * per_page
-      response&.dig("objectIDs")&.drop(offset)&.first(per_page) || []
+      response&.dig("objectIDs")&.drop(offset)&.first(per_page * 2) || []
     end
   end
 

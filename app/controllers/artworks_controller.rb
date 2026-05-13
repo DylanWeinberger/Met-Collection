@@ -22,6 +22,13 @@ class ArtworksController < ApplicationController
     @department_id = params[:department_id]
     @api           = MetApiService.new
     object_ids     = @api.search(query: @query, department_id: @department_id, page: (params[:page] || 1).to_i, per_page: (params[:per_page] || 20).to_i)
-    @artworks      = object_ids.map { |id| @api.find(id) }.compact
+    @artworks  = []
+    object_ids.each do |id|
+        this_art = @api.find(id)
+        if this_art && this_art.image_url.present?
+          @artworks << this_art
+        end
+        break if @artworks.count >= (params[:per_page] || 20).to_i
+    end
   end
 end
